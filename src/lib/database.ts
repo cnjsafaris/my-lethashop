@@ -178,6 +178,14 @@ export const db = {
     return result.rows;
   },
 
+  async activateUser(id: string): Promise<User> {
+    const result = await query(
+      'UPDATE users SET is_active = true WHERE id = $1 RETURNING *',
+      [id]
+    );
+    return result.rows[0];
+  },
+
   // Categories
   async getAllCategories(): Promise<Category[]> {
     const result = await query('SELECT * FROM categories ORDER BY sort_order ASC');
