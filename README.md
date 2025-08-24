@@ -1,4 +1,4 @@
- LeaathE-commerce Platform
+# Lethashop E-commerce Platform
 
 A modern, full-stack e-commerce platform built with React, TypeScript, and PostgreSQL, featuring a comprehensive admin panel for managing products, users, and orders.
 
