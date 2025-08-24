@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useAuth } from "@getmocha/users-service/react";
 import { Star, Plus, Minus, ShoppingBag, Heart, Truck, Shield, RotateCcw } from "lucide-react";
 import { Product } from "@/shared/types";
+import { apiClient } from "@/shared/api";
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -16,13 +17,13 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (slug) {
-      fetch(`/api/products/${slug}`)
-        .then(res => res.ok ? res.json() : Promise.reject())
+      apiClient.getProduct(slug)
         .then(product => {
           setProduct(product);
           setLoading(false);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error('Failed to fetch product:', error);
           setProduct(null);
           setLoading(false);
         });
@@ -39,24 +40,11 @@ export default function ProductPage() {
 
     setAddingToCart(true);
     try {
-      const response = await fetch('/api/cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          product_id: product.id,
-          quantity,
-          size: selectedSize || undefined,
-          color: selectedColor || undefined,
-        }),
-      });
-
-      if (response.ok) {
-        // Show success message or update UI
-        alert('Product added to cart!');
-      } else {
-        throw new Error('Failed to add to cart');
-      }
+      await apiClient.addToCart(product.id, quantity);
+      // Show success message or update UI
+      alert('Product added to cart!');
     } catch (error) {
+      console.error('Error adding product to cart:', error);
       alert('Error adding product to cart. Please try again.');
     } finally {
       setAddingToCart(false);

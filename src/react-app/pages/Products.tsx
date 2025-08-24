@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { Star, Filter, Grid, List } from "lucide-react";
 import { Product, Category } from "@/shared/types";
+import { apiClient } from "@/shared/api";
 
 export default function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,25 +15,24 @@ export default function ProductsPage() {
 
   useEffect(() => {
     // Fetch categories
-    fetch('/api/categories')
-      .then(res => res.json())
+    apiClient.getCategories()
       .then(setCategories)
       .catch(console.error);
   }, []);
 
   useEffect(() => {
     setLoading(true);
-    const url = selectedCategory 
-      ? `/api/products?category=${selectedCategory}`
-      : '/api/products';
+    const params = selectedCategory ? { category: selectedCategory } : {};
     
-    fetch(url)
-      .then(res => res.json())
+    apiClient.getProducts(params)
       .then(products => {
         setProducts(products);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((error) => {
+        console.error('Failed to fetch products:', error);
+        setLoading(false);
+      });
   }, [selectedCategory]);
 
   const clearCategory = () => {

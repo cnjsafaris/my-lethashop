@@ -2,19 +2,22 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight, Star, Truck, Shield, Award } from "lucide-react";
 import { Product } from "@/shared/types";
+import { apiClient } from "@/shared/api";
 
 export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/products?featured=true")
-      .then(res => res.json())
+    apiClient.getProducts({ featured: true })
       .then(products => {
         setFeaturedProducts(products.slice(0, 4));
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((error) => {
+        console.error('Failed to fetch featured products:', error);
+        setLoading(false);
+      });
   }, []);
 
   const categories = [
