@@ -2,7 +2,6 @@
   publish = "dist"
   command = "npm run build:netlify"
   functions = "netlify/functions"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
@@ -13,12 +12,9 @@
   status = 200
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
+  from = "/*"
+  to = "/index.html"
   status = 200
-
-[[redirects]]
-  n = "esbuild"
 
 # Environment variables for different deploy contexts
 [context.production.environment]
