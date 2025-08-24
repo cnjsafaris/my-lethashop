@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { user, redirectToLogin, logout } = useAuth();
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
@@ -124,13 +124,13 @@ export default function Layout({ children }: LayoutProps) {
                   </div>
                 </>
               ) : (
-                <button
-                  onClick={redirectToLogin}
+                <Link
+                  to="/auth"
                   className="flex items-center space-x-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white px-4 py-2 rounded-lg font-medium hover:from-amber-700 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   <User className="w-4 h-4" />
                   <span>Sign In</span>
-                </button>
+                </Link>
               )}
 
               {/* Mobile menu button */}

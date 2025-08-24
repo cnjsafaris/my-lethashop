@@ -6,8 +6,10 @@
   "dependencies": {
     "@cloudflare/workers-types": "^4.20250823.0",
     "@hono/zod-validator": "^0.5.0",
+    "dotenv": "^16.4.7",
     "hono": "4.7.7",
     "lucide-react": "^0.510.0",
+    "pg": "^8.16.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-router": "^7.5.3",
@@ -16,10 +18,11 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.9.6",
     "@eslint/js": "9.25.1",
-    "@getmocha/vite-plugins": "latest",
     "@getmocha/users-service": "^0.0.4",
+    "@getmocha/vite-plugins": "latest",
     "@netlify/functions": "^2.8.2",
     "@types/node": "22.14.1",
+    "@types/pg": "^8.15.5",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "4.4.1",
@@ -44,6 +47,8 @@
     "check": "tsc && vite build && wrangler deploy --dry-run",
     "dev": "vite",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "db:setup": "node scripts/setup-database.js",
+    "db:reset": "node scripts/setup-database.js"
   }
 }
