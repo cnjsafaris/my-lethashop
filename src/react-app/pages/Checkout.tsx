@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "@getmocha/users-service/react";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { useNavigate } from "react-router";
 import { ArrowLeft, Smartphone, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { CartItem } from "@/shared/types";
@@ -16,7 +16,7 @@ interface CheckoutFormData {
 }
 
 export default function CheckoutPage() {
-  const { user, redirectToLogin } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,8 +26,8 @@ export default function CheckoutPage() {
   
   const [formData, setFormData] = useState<CheckoutFormData>({
     phoneNumber: '',
-    firstName: user?.google_user_data?.given_name || '',
-    lastName: user?.google_user_data?.family_name || '',
+    firstName: user?.name?.split(' ')[0] || '',
+    lastName: user?.name?.split(' ')[1] || '',
     email: user?.email || '',
     address: '',
     city: '',
@@ -37,7 +37,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (!user) {
-      redirectToLogin();
+      signInWithGoogle();
       return;
     }
 
@@ -48,7 +48,7 @@ export default function CheckoutPage() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [user, redirectToLogin]);
+  }, [user, signInWithGoogle]);
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
   const shipping = subtotal > 150 ? 0 : 15;

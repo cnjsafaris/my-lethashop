@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "@getmocha/users-service/react";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { Plus, Edit, Trash2, Eye, EyeOff, Star, Save, X } from "lucide-react";
 import { Product, Category } from "@/shared/types";
 
 export default function AdminPage() {
-  const { user, redirectToLogin } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!user) {
-      redirectToLogin();
+      signInWithGoogle();
       return;
     }
 
@@ -33,7 +33,7 @@ export default function AdminPage() {
       setCategories(categoriesData);
       setLoading(false);
     }).catch(() => setLoading(false));
-  }, [user, isAdmin, redirectToLogin]);
+  }, [user, isAdmin, signInWithGoogle]);
 
   const deleteProduct = async (productId: number) => {
     if (!confirm('Are you sure you want to delete this product?')) return;
@@ -61,7 +61,7 @@ export default function AdminPage() {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Please Sign In</h2>
           <button
-            onClick={redirectToLogin}
+            onClick={signInWithGoogle}
             className="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-amber-700 hover:to-orange-700 transition-all duration-300"
           >
             Sign In

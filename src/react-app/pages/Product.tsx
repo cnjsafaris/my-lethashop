@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useAuth } from "@getmocha/users-service/react";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { Star, Plus, Minus, ShoppingBag, Heart, Truck, Shield, RotateCcw } from "lucide-react";
 import { Product } from "@/shared/types";
 import { apiClient } from "@/shared/api";
 
 export default function ProductPage() {
   const { slug } = useParams();
-  const { user, redirectToLogin } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -32,7 +32,7 @@ export default function ProductPage() {
 
   const addToCart = async () => {
     if (!user) {
-      redirectToLogin();
+      signInWithGoogle();
       return;
     }
 

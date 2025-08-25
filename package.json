@@ -1,5 +1,5 @@
 {
-  "name": "mocha-app",
+  "name": "lethashop",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -25,8 +25,6 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.9.6",
     "@eslint/js": "9.25.1",
-    "@getmocha/users-service": "^0.0.4",
-    "@getmocha/vite-plugins": "latest",
     "@netlify/functions": "^2.8.2",
     "@types/node": "22.14.1",
     "@types/pg": "^8.15.5",
@@ -46,7 +44,7 @@
   "scripts": {
     "build": "npx tsc -b && vite build",
     "build:netlify": "npx tsc -b && vite build --mode production",
-    "build:test": "npm run build:netlify && echo 'Build successful for Netlify!'",
+    "build:test": "npm run build:netlify && echo 'Build successful for Lethashop!'",
     "cf-typegen": "wrangler types",
     "check": "npx tsc && vite build && wrangler deploy --dry-run",
     "dev": "vite",

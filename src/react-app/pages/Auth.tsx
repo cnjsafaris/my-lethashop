@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "@getmocha/users-service/react";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { useNavigate, useSearchParams } from "react-router";
 import { LogIn, UserPlus, Mail, Shield, CheckCircle } from "lucide-react";
 
 export default function AuthPage() {
-  const { user, redirectToLogin } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function AuthPage() {
   const handleGoogleAuth = async () => {
     setIsLoading(true);
     try {
-      await redirectToLogin();
+      await signInWithGoogle();
     } catch (error) {
       console.error('Authentication error:', error);
     } finally {

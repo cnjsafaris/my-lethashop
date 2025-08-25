@@ -1,7 +1,6 @@
 import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { mochaPlugins } from "@getmocha/vite-plugins";
 
 // Try to import cloudflare plugin at the top level
 let cloudflarePlugin: any = null;
@@ -19,7 +18,6 @@ export default defineConfig(({ mode }) => {
                    process.env.NODE_ENV === 'production';
   
   const plugins = [
-    ...mochaPlugins(process.env as any),
     react(),
   ];
   

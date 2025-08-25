@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "@getmocha/users-service/react";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { Link } from "react-router";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
 import { CartItem } from "@/shared/types";
 
 export default function CartPage() {
-  const { user, redirectToLogin } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -70,7 +70,7 @@ export default function CartPage() {
             You need to be signed in to view and manage your shopping cart.
           </p>
           <button
-            onClick={redirectToLogin}
+            onClick={signInWithGoogle}
             className="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-amber-700 hover:to-orange-700 transition-all duration-300"
           >
             Sign In

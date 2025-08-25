@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router";
-import { useAuth } from "@getmocha/users-service/react";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { ShoppingBag, User, LogOut, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
@@ -104,18 +104,18 @@ export default function Layout({ children }: LayoutProps) {
                     </Link>
                   )}
                   <div className="flex items-center space-x-2">
-                    {user.google_user_data.picture && (
+                    {user.avatar_url && (
                       <img
-                        src={user.google_user_data.picture}
+                        src={user.avatar_url}
                         alt="Profile"
                         className="w-8 h-8 rounded-full border-2 border-amber-200"
                       />
                     )}
                     <span className="hidden sm:block text-sm font-medium text-gray-700">
-                      {user.google_user_data.given_name || user.email}
+                      {user.name || user.email}
                     </span>
                     <button
-                      onClick={logout}
+                      onClick={signOut}
                       className="p-2 text-gray-700 hover:text-amber-700 transition-colors"
                       title="Logout"
                     >
